@@ -1,0 +1,35 @@
+sources:
+  - 1_fetch/src/get_nwis_data.R
+  - 2_process/src/process_and_style.R
+  - 3_visualize/src/plot_timeseries.R
+
+packages:
+  - dataRetrieval
+  - dplyr
+  - ggplot2
+  - readr
+  - stringr
+  - purrr
+
+targets:
+  all:
+    depends: 3_visualize/out/figure_1.png
+
+  site_data:
+    command: download_nwis_data()
+  
+  1_fetch/out/site_info.csv:
+    command: nwis_site_info(fileout = '1_fetch/out/site_info.csv', site_data)
+
+  site_data_clean:
+    command: process_data(site_data)
+
+  site_data_annotated:
+    command: annotate_data(site_data_clean, site_filename = '1_fetch/out/site_info.csv')
+
+  site_data_styled:
+    command: style_data(site_data_annotated)	
+
+  3_visualize/out/figure_1.png:
+    command: plot_nwis_timeseries(fileout = '3_visualize/out/figure_1.png', 
+      site_data_styled)  
