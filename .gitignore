@@ -3,4 +3,4 @@
 .RData
 .Ruserdata
 
-.remake/*
+_targets/*
