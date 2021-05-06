@@ -6,7 +6,7 @@ source("3_visualize/src/plot_timeseries.R")
 options(tidyverse.quiet = TRUE)
 tar_option_set(packages = c("tidyverse", "dataRetrieval")) # Loading tidyverse because we need dplyr, ggplot2, readr, stringr, and purrr
 
-p1_fetch <- list(
+p1_targets_list <- list(
   tar_target(
     site_data,
     download_nwis_data(),
@@ -18,7 +18,7 @@ p1_fetch <- list(
   )
 )
 
-p2_process <- list(
+p2_targets_list <- list(
   tar_target(
     site_data_clean, 
     process_data(site_data)
@@ -33,7 +33,7 @@ p2_process <- list(
   )
 )
 
-p3_visualize <- list(
+p3_targets_list <- list(
   tar_target(
     figure_1_png,
     plot_nwis_timeseries(fileout = "3_visualize/out/figure_1.png", site_data_styled),
@@ -42,4 +42,4 @@ p3_visualize <- list(
 )
 
 # Return the complete list of targets
-c(p1_fetch, p2_process, p3_visualize)
+c(p1_targets_list, p2_targets_list, p3_targets_list)
