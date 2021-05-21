@@ -37,7 +37,7 @@ download_nwis_site_data <- function(filepath, parameterCd = '00010', startDate="
 
   # -- simulating a failure-prone web-sevice here, do not edit --
   if (sample(c(T,F,F,F), 1)){
-    stop(site_num, ' has failed due to connection timeout. Try scmake() again')
+    stop(site_num, ' has failed due to connection timeout. Try tar_make() again')
   }
   # -- end of do-not-edit block
   
