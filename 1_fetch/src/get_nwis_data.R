@@ -42,7 +42,7 @@ download_nwis_site_data <- function(filepath, parameterCd = '00010', startDate="
   }
   # -- end of do-not-edit block
   
-  write_csv(data_out, path = filepath)
+  write_csv(data_out, file = filepath)
   return(filepath)
 }
 
