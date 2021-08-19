@@ -1,8 +1,9 @@
-nwis_site_info <- function(fileout, site_data){
+nwis_site_info <- function(nwis_data_file){
+  site_data <- read_csv(nwis_data_file, col_types = 'ccTdcccc')
   site_no <- unique(site_data$site_no)
   site_info <- dataRetrieval::readNWISsite(site_no)
-  write_csv(site_info, fileout)
-  return(fileout)
+  #write_csv(site_info, fileout)
+  return(site_info)
 }
 
 
