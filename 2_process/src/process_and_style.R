@@ -1,5 +1,6 @@
-process_data <- function(nwis_data, site_filename){
-  site_info <- read_csv(site_filename)
+process_data <- function(out_file, nwis_data_file, site_info){
+  #site_info <- read_csv(site_filename)
+  nwis_data <- read_csv(nwis_data_file, col_types = 'ccTdcccc')
   nwis_data_clean <- rename(nwis_data, 
                             water_temperature = X_00010_00000) %>% 
     select(-agency_cd, -X_00010_00000_cd, -tz_cd) %>% 
@@ -12,5 +13,6 @@ process_data <- function(nwis_data, site_filename){
            longitude = dec_long_va) %>% 
     mutate(station_name = as.factor(station_name))
   
-  return(nwis_data_clean)
+  write_csv(nwis_data_clean, file = out_file)
+  return(out_file)
 }

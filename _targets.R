@@ -25,29 +25,34 @@ p1_targets_list <- list(
     error = 'continue'
   ),
   tar_target(
-    site_data,
-    bind_rows(site_data_frames),
+    nwis_data_csv,
+    {out_file <- '2_process/out/site_data.csv'
+      write_csv(bind_rows(site_data_frames), file = out_file)
+      return(out_file)
+      }
   ),
   #this works as is
   tar_target(
-    site_info_csv,
-    nwis_site_info(fileout = "1_fetch/out/site_info.csv", site_data),
-    format = "file"
+    site_info,
+    nwis_site_info(nwis_data_file = nwis_data_csv)
   )
 )
 
 #combine to one target
 p2_targets_list <- list(
   tar_target(
-    site_data_clean, 
-    process_data(site_data, site_filename = site_info_csv)
+    site_data_clean_csv, 
+    process_data(out_file = '2_process/out/site_data_clean.csv', 
+                 nwis_data_file = nwis_data_csv, site_info),
+    format = 'file'
   )
 )
 
 p3_targets_list <- list(
   tar_target(
     figure_1_png,
-    plot_nwis_timeseries(fileout = "3_visualize/out/figure_1.png", site_data_clean),
+    plot_nwis_timeseries(fileout = "3_visualize/out/figure_1.png", 
+                         site_data_file = site_data_clean_csv),
     format = "file"
   )
 )
