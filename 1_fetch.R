@@ -22,7 +22,8 @@ p1_targets_list <- list(
     {out_file <- '2_process/out/site_data.csv'
     write_csv(bind_rows(p1_site_data_frames), file = out_file)
     return(out_file)
-    }
+    },
+    format = 'file'
   ),
   #this works as is
   tar_target(
